@@ -1,7 +1,7 @@
 {
   "name": "use-wagmi-contracts",
   "version": "0.0.1",
-  "description": "Convert Solidity ABIs into a ready-to-consume React hook",
+  "description": "Convert Solidity ABIs into a ready-to-consume React utility functions",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
@@ -17,6 +17,13 @@
   ],
   "author": "Daniel Cortes",
   "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "typescript": ">=5.0.0",
+    "viem": ">=0.3.0",
+    "wagmi": ">=1.0.0"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.1.0",
