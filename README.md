@@ -174,6 +174,10 @@ function SetValueDemo() {
     try {
       /**
        * The function signature for `setValue` will be typed based on the contract ABI.
+       *
+       * Unlike read methods, write methods return a tuple of `[hash, result]``. The hash
+       * is the transaction hash, and the result is the return value of the method. If the
+       * method doesn't return anything, the result will be `undefined`.
        */
       const [hash, result] = await contracts.ValueStore().setValue(Math.random() > 0.5);
       setLastWrittenValue(result);
