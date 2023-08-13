@@ -78,7 +78,7 @@ If you use TypeChain to generate your contract ABIs, you can use the `processTyp
 
 ```tsx
 // /path/to/WagmiContractsProvider.tsx
-import { initUseWagmiContracts,  } from "@type_of/use-wagmi-contracts";
+import { initUseWagmiContracts, processTypechainAbis } from "@type_of/use-wagmi-contracts";
 import * as typechain from '/path/to/typechain-types';
 
 const abiMap = processTypechainAbis(typechain, {
