@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { DemoToken } from "./DemoToken";
 export type { Todos } from "./Todos";
+export type { Toggle } from "./Toggle";

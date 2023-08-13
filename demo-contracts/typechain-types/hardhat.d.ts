@@ -32,6 +32,10 @@ declare module "hardhat/types/runtime" {
       name: "Todos",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Todos__factory>;
+    getContractFactory(
+      name: "Toggle",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Toggle__factory>;
 
     getContractAt(
       name: "ERC20",
@@ -58,6 +62,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Todos>;
+    getContractAt(
+      name: "Toggle",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Toggle>;
 
     // default types
     getContractFactory(

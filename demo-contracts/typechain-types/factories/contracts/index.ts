@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { DemoToken__factory } from "./DemoToken__factory";
 export { Todos__factory } from "./Todos__factory";
+export { Toggle__factory } from "./Toggle__factory";

@@ -4,10 +4,10 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract DemoToken is ERC20 {
-    constructor() ERC20("DemoToken", "DEMO") {}
+  constructor() ERC20("DemoToken", "DEMO") {}
 
-    mint() public returns (bool) {
-        _mint(msg.sender, 5 * 10 ** 18);
-        return true;
-    }
+  function mint() public returns (bool) {
+    _mint(msg.sender, 5 * 10 ** 18);
+    return true;
+  }
 }

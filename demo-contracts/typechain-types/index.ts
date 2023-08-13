@@ -16,3 +16,5 @@ export type { DemoToken } from "./contracts/DemoToken";
 export { DemoToken__factory } from "./factories/contracts/DemoToken__factory";
 export type { Todos } from "./contracts/Todos";
 export { Todos__factory } from "./factories/contracts/Todos__factory";
+export type { Toggle } from "./contracts/Toggle";
+export { Toggle__factory } from "./factories/contracts/Toggle__factory";
