@@ -6,19 +6,22 @@ This project includes a set of tools to transform Solidity contract ABIs into st
 
 It also includes a React hook to automatically provide the required `wagmi` arguments to the contract methods, and a way to provide a default contract address for each of your contracts.
 
+Finally, it includes a utility for those using TypeChain to make processing your contract ABIs even easier.
+
 ## Requirements
 
 - React 18+
 - Viem 0.x
 - Wagmi 1.x
   - Note this library does not work with previous verisons of `wagmi` that used `ethers`.
+  - If you are using older versions of `wagmi` + `ethers`, check out [`use-typechain-contracts`](https://www.npmjs.com/package/use-typechain-contracts).
 
 ## Installation
 
 ```
-yarn add use-wagmi-contracts
+yarn add @type_of/use-wagmi-contracts
 # or
-npm install use-wagmi-contracts
+npm install @type_of/use-wagmi-contracts
 ```
 
 ## Recommended Usage
@@ -30,8 +33,6 @@ The recommended way to use this library is to use the `WagmiContractsProvider` c
 To keep things organized, create a new file to initialize the library. In this example, we'll refer to this as `/path/to/WagmiContractsProvider`.
 
 Initialize the library using `initUseWagmiContracts`. It expects an `AbiMap`, which is an object with the following shape below.
-
-**NOTE: If you are using the Typechain library to generate your contract ABIs, you can use the `processTypechainAbis` function to generate the `AbiMap` for you. See the "Using Typechain" section.**
 
 ```tsx
 const abiMap = {
@@ -46,6 +47,14 @@ const abiMap = {
 }
 ```
 
+---
+
+#### <span style="color:red">Note to TypeChain users:</span>
+
+If you are using the TypeChain library to generate your contract ABIs, you can use the `processTypechainAbis` function to generate the `AbiMap` for you. See the "Using TypeChain" section.
+
+---
+
 The keys of the `AbiMap` are the names that you'll use later to refer to your contracts. `defaultAddress` is optional, and can be used to provide a default address for your contract. If you don't provide a default address, you'll need to provide one when you call the contract methods.
 
 Once you have your `AbiMap`, you can initialize the library by calling `initUseWagmiContracts` with your `AbiMap`.
@@ -54,7 +63,7 @@ This returns an object with two properties: `WagmiContractsProvider` and `useCon
 
 ```tsx
 // /path/to/WagmiContractsProvider.tsx
-import { initUseWagmiContracts } from "use-wagmi-contracts";
+import { initUseWagmiContracts } from "@type_of/use-wagmi-contracts";
 
 const abiMap = {...};
 
@@ -63,13 +72,13 @@ const { WagmiContractsProvider, useContracts } = initUseWagmiContracts(abiMap);
 export { WagmiContractsProvider, useContracts };
 ```
 
-### Using Typechain
+### Using TypeChain
 
-If you use Typechain to generate your contract ABIs, you can use the `processTypechainAbis` function to generate the `AbiMap` for you. Assuming you have a `typechain-types` directory in your project, you can do the following:
+If you use TypeChain to generate your contract ABIs, you can use the `processTypechainAbis` function to generate the `AbiMap` for you. Assuming you have a `typechain-types` directory in your project, you can do the following:
 
 ```tsx
 // /path/to/WagmiContractsProvider.tsx
-import { initUseWagmiContracts,  } from "use-wagmi-contracts";
+import { initUseWagmiContracts,  } from "@type_of/use-wagmi-contracts";
 import * as typechain from '/path/to/typechain-types';
 
 const abiMap = processTypechainAbis(typechain, {
@@ -111,7 +120,7 @@ To communicate with your your contracts, use the `useContracts` hook. This hook 
 
 Say we have a very simple contract that looks like this:
 
-```sol
+```js
 contract ValueStore {
   bool public value = false;
 
