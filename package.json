@@ -1,22 +1,28 @@
 {
   "name": "@type_of/use-wagmi-contracts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert Solidity ABIs into a ready-to-consume React utility functions",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types.d.ts",
-  "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs",
-    "test": "vitest run"
-  },
   "keywords": [
     "react",
     "solidity",
     "wagmi",
     "viem"
   ],
-  "author": "Daniel Cortes",
   "license": "MIT",
+  "author": {
+    "name": "Daniel Cortes"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dgca/use-wagmi-contracts"
+  },
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs",
+    "test": "vitest run"
+  },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
