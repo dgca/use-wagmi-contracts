@@ -32,10 +32,9 @@ export type HandlersMap<T extends Abi> = {
     >
   ) => AbiFunctionMap<T>[K]["stateMutability"] extends "view"
     ? Promise<ReadContractReturnType<T, K>>
-    : [
-        Promise<WriteContractReturnType>,
-        SimulateContractReturnType<T, K>["result"]
-      ];
+    : Promise<
+        [WriteContractReturnType, SimulateContractReturnType<T, K>["result"]]
+      >;
 };
 
 /**

@@ -26,6 +26,16 @@ function App() {
   );
 }
 
+function useMintTokens() {
+  const contracts = useContracts();
+  return useCallback(async () => {
+    const [hash, result] = await contracts
+      .DemoToken("0x0000000000000000000000000000000000000000")
+      .mint();
+    console.log(`Success! Tx hash: ${hash}`, result);
+  }, [contracts]);
+}
+
 function Demo() {
   const contracts = useContracts();
   const account = useAccount();
