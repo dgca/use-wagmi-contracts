@@ -1,4 +1,4 @@
-# `use-wagmi-contracts`
+# `@type_of/use-wagmi-contracts`
 
 ## Description
 
