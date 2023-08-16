@@ -12,7 +12,7 @@ Finally, it includes a utility for those using TypeChain to make processing your
 
 If you like videos, I put together this demo of creating a project using Rainbowkit + Hardhat + `use-wagmi-contracts` from scratch.
 
-[Check it out on YouTube](https://www.youtube.com/watch?v=sdL6a28EHcE)
+### [Check it out on YouTube](https://www.youtube.com/watch?v=sdL6a28EHcE) 👈
 
 ## Requirements
 
