@@ -10,13 +10,8 @@ export default [
     input: "src/index.ts",
     output: [
       {
-        file: packageJson.module,
-        format: "esm",
-        sourcemap: true,
-      },
-      {
         file: packageJson.main,
-        format: "cjs",
+        format: "esm",
         sourcemap: true,
       },
     ],
