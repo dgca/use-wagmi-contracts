@@ -26,13 +26,21 @@ function App() {
   );
 }
 
+const TEST_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 function useMintTokens() {
   const contracts = useContracts();
   return useCallback(async () => {
-    const [hash, result] = await contracts
-      .DemoToken("0x0000000000000000000000000000000000000000")
-      .mint();
+    const [hash, result] = await contracts.DemoToken(TEST_ADDRESS).mint();
     console.log(`Success! Tx hash: ${hash}`, result);
+  }, [contracts]);
+}
+
+function useTestPure() {
+  const contracts = useContracts();
+  return useCallback(async () => {
+    const result = await contracts.DemoToken(TEST_ADDRESS).testPure();
+    console.log(`Works if it says "pure": `, result);
   }, [contracts]);
 }
 
@@ -46,7 +54,7 @@ function Demo() {
     const doFetch = async () => {
       if (!account.address) return;
       const balance = await contracts
-        .DemoToken("0x0000000000000000000000000000000000000000")
+        .DemoToken(TEST_ADDRESS)
         .balanceOf(account.address);
       setTokenBalance(balance);
     };

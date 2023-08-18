@@ -38,6 +38,7 @@ export interface DemoTokenInterface extends utils.Interface {
     "mint()": FunctionFragment;
     "name()": FunctionFragment;
     "symbol()": FunctionFragment;
+    "testPure()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -54,6 +55,7 @@ export interface DemoTokenInterface extends utils.Interface {
       | "mint"
       | "name"
       | "symbol"
+      | "testPure"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
@@ -83,6 +85,7 @@ export interface DemoTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "mint", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "testPure", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -115,6 +118,7 @@ export interface DemoTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "testPure", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -224,6 +228,8 @@ export interface DemoToken extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
+    testPure(overrides?: CallOverrides): Promise<[string]>;
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
@@ -279,6 +285,8 @@ export interface DemoToken extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  testPure(overrides?: CallOverrides): Promise<string>;
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
@@ -331,6 +339,8 @@ export interface DemoToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<string>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
+
+    testPure(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -412,6 +422,8 @@ export interface DemoToken extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    testPure(overrides?: CallOverrides): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
@@ -467,6 +479,8 @@ export interface DemoToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    testPure(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

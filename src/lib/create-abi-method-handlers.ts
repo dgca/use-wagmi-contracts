@@ -16,9 +16,10 @@ export function createAbiMethodHandlers<T extends Abi>(
   } = {};
 
   for (const func of functionDefinitions) {
-    const isViewFunction = func.stateMutability === "view";
+    const isReadOnlyFunction =
+      func.stateMutability === "view" || func.stateMutability === "pure";
 
-    if (isViewFunction) {
+    if (isReadOnlyFunction) {
       handlers[func.name] = async (...args: unknown[]) => {
         return publicClient.readContract({
           address,
@@ -30,7 +31,7 @@ export function createAbiMethodHandlers<T extends Abi>(
       };
     }
 
-    if (!isViewFunction) {
+    if (!isReadOnlyFunction) {
       handlers[func.name] = async (...args: unknown[]) => {
         const { request, result } = await publicClient.simulateContract({
           abi,

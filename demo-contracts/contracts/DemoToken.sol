@@ -10,4 +10,8 @@ contract DemoToken is ERC20 {
     _mint(msg.sender, 5 * 10 ** 18);
     return true;
   }
+
+  function testPure() external pure returns(string memory) {
+    return "pure";
+  }
 }
