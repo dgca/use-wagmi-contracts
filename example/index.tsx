@@ -40,7 +40,7 @@ function useTestPure() {
   const contracts = useContracts();
   return useCallback(async () => {
     const result = await contracts.DemoToken(TEST_ADDRESS).testPure();
-    console.log(`Works if it says "pure": `, result);
+    console.log('Works if it says "pure": ', result);
   }, [contracts]);
 }
 
