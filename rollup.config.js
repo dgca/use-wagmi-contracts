@@ -14,6 +14,11 @@ export default [
         format: "esm",
         sourcemap: true,
       },
+      {
+        file: packageJson.main,
+        format: "cjs",
+        sourcemap: true,
+      },
     ],
     plugins: [
       peerDepsExternal(),
