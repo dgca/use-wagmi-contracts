@@ -1,4 +1,4 @@
-# `@type_of/use-wagmi-contracts`
+# `use-wagmi-contracts`
 
 ## Description
 
@@ -7,6 +7,12 @@ This project includes a set of tools to transform Solidity contract ABIs into st
 It also includes a React hook to automatically provide the required `wagmi` arguments to the contract methods, and a way to provide a default contract address for each of your contracts.
 
 Finally, it includes a utility for those using TypeChain to make processing your contract ABIs even easier.
+
+## Live Demo 🎥
+
+If you like videos, I put together this demo of creating a project using Rainbowkit + Hardhat + `use-wagmi-contracts` from scratch.
+
+### [Check it out on YouTube](https://www.youtube.com/watch?v=sdL6a28EHcE) 👈
 
 ## Requirements
 
