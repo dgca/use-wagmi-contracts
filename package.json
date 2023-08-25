@@ -1,6 +1,6 @@
 {
   "name": "@type_of/use-wagmi-contracts",
-  "version": "0.0.9",
+  "version": "0.0.10-beta.0",
   "description": "Convert Solidity ABIs into a ready-to-consume React utility functions",
   "keywords": [
     "react",

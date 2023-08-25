@@ -6,28 +6,27 @@ import {
   ExtractAbiFunction,
   ExtractAbiFunctionNames,
   ExtractAbiFunctions,
-} from 'abitype';
+} from "abitype";
 import {
   PublicClient,
   UseContractReadConfig,
-  UseContractWriteConfig,
   UsePrepareContractWriteConfig,
   useContractWrite,
   usePublicClient,
   useWalletClient,
-} from 'wagmi';
+} from "wagmi";
 import {
   GetAccountResult,
   ReadContractResult,
   WriteContractMode,
-} from '@wagmi/core';
+} from "@wagmi/core";
 import {
   ReadContractReturnType,
   SimulateContractReturnType,
   WriteContractReturnType,
-} from 'viem';
-import { UseQueryResult } from '@tanstack/react-query';
-import { Simplify } from 'type-fest';
+} from "viem";
+import { UseQueryResult } from "@tanstack/react-query";
+import { Simplify } from "type-fest";
 
 export type WagmiArgs = {
   publicClient: ReturnType<typeof usePublicClient>;
@@ -37,7 +36,7 @@ export type WagmiArgs = {
 
 export type AbiFunctionTypes<T extends Abi> = ExtractAbiFunctions<T>;
 export type AbiFunctionMap<T extends Abi> = {
-  [K in AbiFunctionTypes<T>['name']]: Extract<AbiFunctionTypes<T>, { name: K }>;
+  [K in AbiFunctionTypes<T>["name"]]: Extract<AbiFunctionTypes<T>, { name: K }>;
 };
 
 export type ReadFn<
@@ -46,8 +45,8 @@ export type ReadFn<
 > = {
   (
     ...args: AbiParamsToPrimitivesTuple<
-      ExtractAbiFunction<TAbi, TFunctionName>['inputs'],
-      'inputs'
+      ExtractAbiFunction<TAbi, TFunctionName>["inputs"],
+      "inputs"
     >
   ): Promise<ReadContractReturnType<TAbi, TFunctionName>>;
   useRead: (
@@ -57,7 +56,7 @@ export type ReadFn<
         TFunctionName,
         ReadContractResult<TAbi, TFunctionName>
       >,
-      'abi' | 'address' | 'functionName'
+      "abi" | "address" | "functionName"
     >
   ) => UseQueryResult<ReadContractResult<TAbi, TFunctionName>, Error>;
 };
@@ -74,29 +73,29 @@ export type WriteFn<
 > = {
   (
     ...args: AbiParamsToPrimitivesTuple<
-      ExtractAbiFunction<TAbi, TFunctionName>['inputs'],
-      'inputs'
+      ExtractAbiFunction<TAbi, TFunctionName>["inputs"],
+      "inputs"
     >
   ): Promise<
     [
       WriteContractReturnType,
-      SimulateContractReturnType<TAbi, TFunctionName>['result']
+      SimulateContractReturnType<TAbi, TFunctionName>["result"]
     ]
   >;
   useWrite: (
     useWriteConfig?: Simplify<
       Omit<
         UsePrepareContractWriteConfig<TAbi, TFunctionName>,
-        'abi' | 'address' | 'functionName'
+        "abi" | "address" | "functionName"
       >
     >
-  ) => UseContractWriteReturn<TAbi, TFunctionName, 'prepared'>;
+  ) => UseContractWriteReturn<TAbi, TFunctionName, "prepared">;
 };
 
 export type HandlersMap<TAbi extends Abi> = {
-  [KFunctionName in AbiFunctionTypes<TAbi>['name']]: AbiFunctionMap<TAbi>[KFunctionName]['stateMutability'] extends
-    | 'view'
-    | 'pure'
+  [KFunctionName in AbiFunctionTypes<TAbi>["name"]]: AbiFunctionMap<TAbi>[KFunctionName]["stateMutability"] extends
+    | "view"
+    | "pure"
     ? ReadFn<TAbi, KFunctionName>
     : WriteFn<TAbi, KFunctionName>;
 };
@@ -132,7 +131,7 @@ export type TypeChainObj = {
 };
 
 export type ContractToHandlersMap<T extends AbiMap> = {
-  [K in keyof T]: T[K]['defaultAddress'] extends string
-    ? (address?: string) => HandlersMap<T[K]['abi']>
-    : (address: string) => HandlersMap<T[K]['abi']>;
+  [K in keyof T]: T[K]["defaultAddress"] extends string
+    ? (address?: string) => HandlersMap<T[K]["abi"]>
+    : (address: string) => HandlersMap<T[K]["abi"]>;
 };

@@ -1,11 +1,11 @@
-import { Abi, Address } from 'abitype';
-import type { Simplify } from 'type-fest';
-import { WagmiArgs, AbiFunctionTypes, HandlersMap } from './types';
+import { Abi, Address } from "abitype";
+import type { Simplify } from "type-fest";
+import { WagmiArgs, AbiFunctionTypes, HandlersMap } from "./types";
 import {
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
-} from 'wagmi';
+} from "wagmi";
 
 export function createAbiMethodHandlers<TAbi extends Abi>(
   { publicClient, walletClient, account }: WagmiArgs,
@@ -13,7 +13,7 @@ export function createAbiMethodHandlers<TAbi extends Abi>(
   address: Address
 ) {
   const functionDefinitions = abi.filter(
-    (item): item is AbiFunctionTypes<TAbi> => item.type === 'function'
+    (item): item is AbiFunctionTypes<TAbi> => item.type === "function"
   );
 
   const handlers: {
@@ -22,7 +22,7 @@ export function createAbiMethodHandlers<TAbi extends Abi>(
 
   for (const func of functionDefinitions) {
     const isReadOnlyFunction =
-      func.stateMutability === 'view' || func.stateMutability === 'pure';
+      func.stateMutability === "view" || func.stateMutability === "pure";
 
     if (isReadOnlyFunction) {
       handlers[func.name] = async (...args: unknown[]) => {
@@ -77,7 +77,10 @@ export function createAbiMethodHandlers<TAbi extends Abi>(
         });
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        return useContractWrite(config);
+        return useContractWrite(
+          // @ts-ignore
+          config
+        );
       };
     }
   }
