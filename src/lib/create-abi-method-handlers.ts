@@ -1,14 +1,19 @@
-import { Abi, Address } from "abitype";
-import type { Simplify } from "type-fest";
-import { WagmiArgs, AbiFunctionTypes, HandlersMap } from "./types";
+import { Abi, Address } from 'abitype';
+import type { Simplify } from 'type-fest';
+import { WagmiArgs, AbiFunctionTypes, HandlersMap } from './types';
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+} from 'wagmi';
 
-export function createAbiMethodHandlers<T extends Abi>(
+export function createAbiMethodHandlers<TAbi extends Abi>(
   { publicClient, walletClient, account }: WagmiArgs,
-  abi: T,
+  abi: TAbi,
   address: Address
 ) {
   const functionDefinitions = abi.filter(
-    (item): item is AbiFunctionTypes<T> => item.type === "function"
+    (item): item is AbiFunctionTypes<TAbi> => item.type === 'function'
   );
 
   const handlers: {
@@ -17,7 +22,7 @@ export function createAbiMethodHandlers<T extends Abi>(
 
   for (const func of functionDefinitions) {
     const isReadOnlyFunction =
-      func.stateMutability === "view" || func.stateMutability === "pure";
+      func.stateMutability === 'view' || func.stateMutability === 'pure';
 
     if (isReadOnlyFunction) {
       handlers[func.name] = async (...args: unknown[]) => {
@@ -29,10 +34,21 @@ export function createAbiMethodHandlers<T extends Abi>(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
       };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (handlers[func.name] as any).useRead = (args: any) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return useContractRead({
+          abi,
+          address,
+          functionName: func.name,
+          ...args,
+        });
+      };
     }
 
     if (!isReadOnlyFunction) {
-      handlers[func.name] = async (...args: unknown[]) => {
+      handlers[func.name] = async (args: Record<string, unknown>) => {
         const { request, result } = await publicClient.simulateContract({
           abi,
           address,
@@ -45,8 +61,26 @@ export function createAbiMethodHandlers<T extends Abi>(
         const hash = await walletClient.data?.writeContract(request);
         return [hash, result];
       };
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (handlers[func.name] as any).useWrite = (
+        args?: Record<string, unknown>
+      ) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const { config } = usePrepareContractWrite({
+          abi: abi,
+          address: address,
+          functionName: func.name,
+          ...args,
+        });
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return useContractWrite(config);
+      };
     }
   }
 
-  return handlers as Simplify<HandlersMap<T>>;
+  return handlers as Simplify<HandlersMap<TAbi>>;
 }

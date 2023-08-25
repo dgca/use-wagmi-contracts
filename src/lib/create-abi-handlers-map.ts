@@ -3,11 +3,11 @@ import { Simplify } from 'type-fest';
 import { createAbiMethodHandlers } from './create-abi-method-handlers';
 import { AbiMap, ContractToHandlersMap, WagmiArgs } from './types';
 
-export function createAbiHandlersMap<T extends AbiMap>(
+export function createAbiHandlersMap<TAbi extends AbiMap>(
   wagmiArgs: WagmiArgs,
-  abiMap: T
+  abiMap: TAbi
 ) {
-  type BuiltContractToHandlersMap = ContractToHandlersMap<T>;
+  type BuiltContractToHandlersMap = ContractToHandlersMap<TAbi>;
 
   const result: {
     [key: string]: unknown;
