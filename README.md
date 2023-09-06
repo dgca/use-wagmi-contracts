@@ -30,11 +30,9 @@ yarn add @type_of/use-wagmi-contracts
 npm install @type_of/use-wagmi-contracts
 ```
 
-## Recommended Usage
+## Setup
 
 The recommended way to use this library is to use the `WagmiContractsProvider` component to wrap your app. This will give you a convenient `useContracts()` hook that you can use to access your contracts, and all contract methods will have the appropriate `wagmi` arguments bound to them already.
-
-### Setup
 
 To keep things organized, create a new file to initialize the library. In this example, we'll refer to this as `/path/to/WagmiContractsProvider`.
 
@@ -55,7 +53,7 @@ const abiMap = {
 
 ---
 
-#### <span style="color:red">Note to TypeChain users:</span>
+### <span style="color:red">Note to TypeChain users:</span>
 
 If you are using the TypeChain library to generate your contract ABIs, you can use the `processTypechainAbis` function to generate the `AbiMap` for you. See the "Using TypeChain" section.
 
@@ -120,9 +118,11 @@ export function App({ children }) {
 
 That's it! You can now use the `useContracts` hook to access your contracts and call their methods.
 
-### Communicating with contracts
+## Communicating with contracts
 
 To communicate with your your contracts, use the `useContracts` hook. This hook returns a map of your contracts, with each contract containing a map of its methods.
+
+### Using the viem `readContract` and `writeContract` approach
 
 Say we have a very simple contract that looks like this:
 
@@ -216,3 +216,67 @@ function SetValueDemo() {
   );
 }
 ```
+
+### Using wagmi's `useContractRead` and `useContractWrite` hooks
+
+This library also provides wrappers around wagmi's `useContractRead` and `useContractWrite` hooks for every contract method. Note that for simplicity and to differentiate, ours are named `useRead` and `useWrite`.
+
+To learn how to use them, let's look at an example. We'll use the same contract example as above.
+
+```js
+contract ValueStore {
+  bool public value = false;
+
+  function getValue() external view returns(bool) {
+    return value;
+  }
+
+  function setValue(bool _nextValue) external returns(bool) {
+    value = _nextValue;
+    return value;
+  }
+}
+```
+
+Wagmi's `useContractRead` and `useContractWrite` hooks are wrappers over `react-query`, and they return an object with properties about your request, such as `loading`, `data`, `error`, etc. The return value of these hooks will be a React Query `useQuery` or `useMutation` hook, depending on whether the method is a read or write method. Read the [`react-query` docs](https://tanstack.com/query/v3/) for more information.
+
+To read contract data, you can do the following:
+
+```tsx
+import { useContracts } from "/path/to/WagmiContractsProvider";
+
+function GetValueDemo() {
+  const contracts = useContracts();
+
+  const valueResult = contracts.ValueStore().getValue.useRead();
+
+  if (valueResult.loading) return null;
+
+  return (
+    <p>The value is: {valueResult.data ? 'TRUE' : 'FALSE'}</p>
+  );
+}
+```
+
+To write data using `useWrite`, you can do the following:
+
+```tsx
+import { useContracts } from "/path/to/WagmiContractsProvider";
+
+function SetValueDemo() {
+  const contracts = useContracts();
+  const handleSetValue = contracts.ValueStore().setValue.useWrite({
+    args: [Math.random() > 0.5]
+  });
+
+  return (
+    <div>
+      <button onClick={handleSetValue.write}>
+        Set Random Value
+      </button>
+    </div>
+  );
+}
+```
+
+Both `useRead` and `useWrite` take an object as their argument, and this object is merged with wagmi's `useContractRead` and `useContractWrite` hooks. This means you can pass any of the options that `useContractRead` and `useContractWrite` accept.
