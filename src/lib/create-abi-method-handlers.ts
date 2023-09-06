@@ -48,7 +48,7 @@ export function createAbiMethodHandlers<TAbi extends Abi>(
     }
 
     if (!isReadOnlyFunction) {
-      handlers[func.name] = async (args: Record<string, unknown>) => {
+      handlers[func.name] = async (...args: unknown[]) => {
         const { request, result } = await publicClient.simulateContract({
           abi,
           address,
@@ -78,6 +78,7 @@ export function createAbiMethodHandlers<TAbi extends Abi>(
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return useContractWrite(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           config
         );
